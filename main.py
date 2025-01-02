@@ -6,6 +6,7 @@ from os import environ, makedirs
 from dotenv import load_dotenv
 
 from line_works.client import LineWorks
+from line_works.tracer import LineWorksTracer
 from logger import get_file_path_logger
 
 LOG_DIRECTORY = "logs"
@@ -34,8 +35,10 @@ if __name__ == "__main__":
         ],
     )
 
-    logger.info("hello.")
-
     works = LineWorks(works_id=WORKS_ID, password=PASSWORD)
+
     my_info = works.get_my_info()
     logger.info(f"{my_info=}")
+
+    tracer = LineWorksTracer(works=works)
+    tracer.trace()
