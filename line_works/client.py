@@ -4,7 +4,7 @@ from os.path import exists
 from os.path import join as path_join
 from typing import Any, Type
 
-from pydantic import BaseModel, Field, PrivateAttr, ValidationError
+from pydantic import BaseModel, Field, PrivateAttr
 from requests import HTTPError, JSONDecodeError, Session
 
 from line_works import config
@@ -62,11 +62,11 @@ class LineWorks(BaseModel):
 
         try:
             my_info = self.get_my_info()
-        except ValidationError:
+        except Exception:
             self.session.cookies.clear()
             self.login_with_id()
-            my_info = self.get_my_info()
 
+        my_info = self.get_my_info()
         self.tenant_id = my_info.tenant_id
         self.domain_id = my_info.domain_id
         self.contact_no = my_info.contact_no
