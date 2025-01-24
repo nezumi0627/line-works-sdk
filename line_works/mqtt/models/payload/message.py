@@ -1,7 +1,11 @@
+import json
 from typing import Optional
 
 from pydantic import Field
 
+from line_works.exceptions import LogicException
+from line_works.models.sticker import Sticker
+from line_works.mqtt.enums.notification_type import NotificationType
 from line_works.mqtt.models.payload.badge import BadgePayload
 
 
@@ -24,3 +28,16 @@ class MessagePayload(BadgePayload):
     @property
     def unique_id(self) -> str:
         return f"{self.loc_key}_{self.notification_id}"
+
+    @property
+    def extras_dict(self) -> dict:
+        return json.loads(self.extras) if self.extras else {}
+
+    @property
+    def sticker(self) -> Sticker:
+        if self.notification_type == NotificationType.NOTIFICATION_STICKER:
+            return Sticker(**self.extras_dict)
+        raise LogicException(
+            f"Invalid notification type: {self.notification_type}. "
+            f"Expected {NotificationType.NOTIFICATION_STICKER}."
+        )
