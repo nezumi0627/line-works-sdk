@@ -1,0 +1,508 @@
+openapi: 3.1.0
+info:
+  title: LINE WORKS Talk API
+  version: '1.0'
+servers:
+  - url: 'https://talk.worksmobile.com'
+    description: TalkURL
+paths:
+  /p/contact/v3/domain/contacts/my:
+    parameters: []
+    get:
+      summary: Get My Information
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyInfo'
+      operationId: get-my-info
+      description: Get your own information.
+      parameters:
+        - $ref: '#/components/parameters/Cookie'
+  /p/oneapp/client/chat/sendMessage:
+    post:
+      summary: Send Message
+      operationId: send-message
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+        description: ''
+      parameters:
+        - $ref: '#/components/parameters/Cookie'
+      description: Send Message.
+components:
+  schemas:
+    Name:
+      type: object
+      x-examples:
+        Example 1:
+          firstName: \u3044\u3064
+          lastName: \u306a\u306a\u3068
+          phoneticFirstName: ''
+          phoneticLastName: ''
+          displayName: \u306a\u306a\u3068\u3044\u3064
+          phoneticName: ''
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneticFirstName:
+          type: string
+        phoneticLastName:
+          type: string
+        displayName:
+          type: string
+        phoneticName:
+          type: string
+      required:
+        - firstName
+        - lastName
+        - phoneticFirstName
+        - phoneticLastName
+        - displayName
+        - phoneticName
+    Email:
+      type: object
+      x-examples:
+        Example 1:
+          content: nanato12@when-0
+          typeCode: WORK
+          represent: true
+      properties:
+        content:
+          type: string
+        typeCode:
+          type: string
+        represent:
+          type: boolean
+      required:
+        - content
+        - typeCode
+        - represent
+    User:
+      type: object
+      x-examples:
+        Example 1:
+          serviceType: line
+          worksAtUserNo: 913000042832541
+          name: \u306a\u306a\u3068\u3044\u3064
+          id: nanato12@when-0
+          inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+      properties:
+        serviceType:
+          type: string
+        worksAtUserNo:
+          type: integer
+        name:
+          type: string
+        id:
+          type: string
+        inviteUrl:
+          type: string
+      required:
+        - serviceType
+        - worksAtUserNo
+        - name
+        - id
+        - inviteUrl
+    WorksAt:
+      type: object
+      x-examples:
+        Example 1:
+          id: nanato12@when-0
+          inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+          users:
+            - serviceType: line
+              worksAtUserNo: 913000042832541
+              name: \u306a\u306a\u3068\u3044\u3064
+              id: nanato12@when-0
+              inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+            - serviceType: worksat
+              worksAtUserNo: 913000042832540
+              name: \u306a\u306a\u3068\u3044\u3064
+              id: nanato12@when-0
+              inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+          worksAtCount: 0
+          idSearchBlock: false
+      properties:
+        id:
+          type: string
+        inviteUrl:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        worksAtCount:
+          type: integer
+        idSearchBlock:
+          type: boolean
+      required:
+        - id
+        - inviteUrl
+        - users
+        - worksAtCount
+        - idSearchBlock
+    Organization:
+      type: object
+      x-examples:
+        Example 1:
+          domainId: 400478918
+          organization: \u306a\u306a\u305f\u3044\u3064
+          groups: []
+      properties:
+        domainId:
+          type: integer
+        organization:
+          type: string
+        groups:
+          type: array
+          items:
+            type: object
+      required:
+        - domainId
+        - organization
+        - groups
+    MyInfo:
+      type: object
+      x-examples:
+        Example 1:
+          tenantId: 400478918
+          domainId: 400478918
+          contactNo: 110002509202075
+          readOnly: false
+          tempId: false
+          name:
+            firstName: \u3044\u3064
+            lastName: \u306a\u306a\u3068
+            phoneticFirstName: ''
+            phoneticLastName: ''
+            displayName: \u306a\u306a\u3068\u3044\u3064
+            phoneticName: ''
+          i18nName: ''
+          i18nNames: []
+          photos: []
+          organizations:
+            - domainId: 400478918
+              organization: \u306a\u306a\u305f\u3044\u3064
+              groups: []
+          emails:
+            - content: nanato12@when-0
+              typeCode: WORK
+              represent: true
+            - content: okj0589@gmail.com
+              typeCode: OTHER
+              represent: false
+          telephones: []
+          messengers: []
+          position: \u7ba1\u7406\u8077
+          department: ''
+          location: ''
+          important: false
+          executive: false
+          photoHash: ''
+          worksAt:
+            id: nanato12@when-0
+            inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+            users:
+              - serviceType: line
+                worksAtUserNo: 913000042832541
+                name: \u306a\u306a\u3068\u3044\u3064
+                id: nanato12@when-0
+                inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+              - serviceType: worksat
+                worksAtUserNo: 913000042832540
+                name: \u306a\u306a\u3068\u3044\u3064
+                id: nanato12@when-0
+                inviteUrl: 'https://works.do/R/ti/p/nanato12@when-0'
+            worksAtCount: 0
+            idSearchBlock: false
+          accessLimit: false
+          userPhotoModify: true
+          userAbsenceModify: false
+          organization: \u306a\u306a\u305f\u3044\u3064
+          groups: []
+          worksServices:
+            - contact
+            - appdir
+            - message
+            - home
+            - calendar
+            - form
+            - task
+          customFields: []
+          profileStatuses: []
+          profileStatusesV2: []
+          instance: 23921
+      properties:
+        tenantId:
+          type: integer
+        domainId:
+          type: integer
+        contactNo:
+          type: integer
+        readOnly:
+          type: boolean
+        tempId:
+          type: boolean
+        name:
+          $ref: '#/components/schemas/Name'
+        i18nName:
+          type: string
+        i18nNames:
+          type: array
+          items:
+            type: object
+        photos:
+          type: array
+          items:
+            type: object
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/Email'
+        telephones:
+          type: array
+          items:
+            type: object
+        messengers:
+          type: array
+          items:
+            type: object
+        position:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        important:
+          type: boolean
+        executive:
+          type: boolean
+        photoHash:
+          type: string
+        worksAt:
+          $ref: '#/components/schemas/WorksAt'
+        accessLimit:
+          type: boolean
+        userPhotoModify:
+          type: boolean
+        userAbsenceModify:
+          type: boolean
+        organization:
+          type: string
+        groups:
+          type: array
+          items:
+            type: object
+        worksServices:
+          type: array
+          items:
+            type: string
+        customFields:
+          type: array
+          items:
+            type: object
+        profileStatuses:
+          type: array
+          items:
+            type: object
+        profileStatusesV2:
+          type: array
+          items:
+            type: object
+        instance:
+          type: integer
+      required:
+        - tenantId
+        - domainId
+        - contactNo
+        - readOnly
+        - tempId
+        - name
+        - i18nName
+        - i18nNames
+        - photos
+        - organizations
+        - emails
+        - telephones
+        - messengers
+        - position
+        - department
+        - location
+        - important
+        - executive
+        - photoHash
+        - worksAt
+        - accessLimit
+        - userPhotoModify
+        - userAbsenceModify
+        - organization
+        - groups
+        - worksServices
+        - customFields
+        - profileStatuses
+        - profileStatusesV2
+        - instance
+      description: ''
+      title: ''
+    Caller:
+      title: Caller
+      type: object
+      properties:
+        domainId:
+          type: integer
+        userNo:
+          type: integer
+      required:
+        - domainId
+        - userNo
+    Sticker:
+      title: Sticker
+      type: object
+      description: sticker model
+      properties:
+        pkgVer:
+          type: string
+        pkgId:
+          type: string
+        stkType:
+          type: string
+        stkId:
+          type: string
+        stkOpt:
+          type: string
+      required:
+        - pkgVer
+        - pkgId
+        - stkType
+        - stkId
+        - stkOpt
+    SentMessage:
+      title: SentMessage
+      type: object
+      properties:
+        messageId:
+          type: integer
+        channelNo:
+          type: integer
+        writerId:
+          type: string
+        userNo:
+          type: integer
+        botNo:
+          type: integer
+        messageNo:
+          type: integer
+        content:
+          type: string
+        memberCount:
+          type: integer
+        messageTypeCode:
+          type: integer
+        messageStatusType:
+          type: string
+        messageStatusTypeCode:
+          type: integer
+        extras:
+          type: string
+        tid:
+          type: integer
+        createTime:
+          type: integer
+        updateTime:
+          type: integer
+      required:
+        - messageId
+        - channelNo
+        - writerId
+        - userNo
+        - botNo
+        - messageNo
+        - content
+        - memberCount
+        - messageTypeCode
+        - messageStatusType
+        - messageStatusTypeCode
+        - tid
+        - createTime
+        - updateTime
+    BaseResponse:
+      title: BaseResponse
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message
+    SendMessageRequest:
+      title: SendMessageRequest
+      type: object
+      properties:
+        serviceId:
+          type: string
+          default: works
+        channelNo:
+          type: integer
+        tempMessageId:
+          type: integer
+          default: 733428260
+        caller:
+          $ref: '#/components/schemas/Caller'
+        extras:
+          type: string
+        content:
+          type: string
+        type:
+          type: integer
+      required:
+        - channelNo
+        - caller
+        - type
+    SendMessageResponse:
+      title: SendMessageResponse
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            result:
+              $ref: '#/components/schemas/SentMessage'
+          required:
+            - result
+  responses: {}
+  requestBodies: {}
+  parameters:
+    Cookie:
+      name: cookie
+      in: header
+      required: false
+      schema:
+        type: string
+      description: cookie
+    UserAgent:
+      name: User-Agent
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+      description: user agent

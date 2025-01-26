@@ -37,3 +37,14 @@ test-pypi:
 .PHONY: pypi
 pypi:
 	twine upload --repository pypi dist/* --verbose
+
+.PHONY: generate
+generate:
+	rm -rf docs
+	rm -rf line_works/openapi
+	npx @openapitools/openapi-generator-cli generate \
+		-i openapi/talk.yml \
+		-g python \
+		-o . \
+		-c openapi/config.yml \
+		--additional-properties packageName=line_works.openapi.talk
