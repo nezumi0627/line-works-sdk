@@ -2,9 +2,7 @@ from typing import Type
 
 from line_works.mqtt.enums.notification_type import NotificationType
 from line_works.mqtt.models.payload.badge import BadgePayload
-from line_works.mqtt.models.payload.message import (
-    MessagePayload,
-)
+from line_works.mqtt.models.payload.message import MessagePayload
 from line_works.mqtt.models.payload.service import ServicePayload
 
 PayloadTypes = MessagePayload | ServicePayload | BadgePayload
