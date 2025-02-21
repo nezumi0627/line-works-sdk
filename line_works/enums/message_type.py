@@ -25,8 +25,8 @@ class MessageType(IntEnum):
     VOIP_GROUP_CALL_SCREEN_SHARE = 21
     MERGE_FORWARD = 22
     BOT_LINK_IMAGE = 20
-    BUTTONS = 23
-    LIST = 24
+    BUTTON_TEMPLATE = 23
+    LIST_TEMPLATE = 24
     LINK_RICH = 25
     PROFILE = 26
     RICH = 27
