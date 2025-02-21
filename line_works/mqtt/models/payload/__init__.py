@@ -34,14 +34,12 @@ NOTIFICATION_TYPE_MODEL_MAPPING: dict[int, Type[PayloadTypes]] = {
     NotificationType.NOTIFICATION_STOP_DSSHARE.value: MessagePayload,
     NotificationType.NOTIFICATION_CANCEL_CALL.value: MessagePayload,
     NotificationType.NOTIFICATION_NEW_MAIL.value: MessagePayload,
-    NotificationType.NOTIFICATION_BADGE.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_SCHD_REMIND.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_TASK_REMIND.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_APPO_INVITE.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_APPO_UPDATE.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_APPO_CANCEL.value: MessagePayload,
     NotificationType.NOTIFICATION_API_EXEC_COMMAND.value: MessagePayload,
-    NotificationType.NOTIFICATION_SERVICE.value: ServicePayload,
     # 現在V3が使われているようなので、18をNOTIFICATION_STICKERとして定義
     NotificationType.NOTIFICATION_STICKER.value: MessagePayload,
 }
