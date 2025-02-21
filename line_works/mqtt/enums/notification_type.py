@@ -9,7 +9,7 @@ class NotificationType(IntEnum):
     KICK = 204
 
     # コマンドメッセージタイプ
-    CMD_READ = 93004
+    ACK = 93004
 
     # 通知メッセージタイプ
     NOTIFICATION_MESSAGE = 1
