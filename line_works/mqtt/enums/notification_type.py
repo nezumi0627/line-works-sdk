@@ -3,7 +3,7 @@ from enum import IntEnum
 
 class NotificationType(IntEnum):
     NORMAL = 101
-    AWAY = 102  # TODO: 不在メッセージの詳細仕様を確認
+    AWAY = 102
     LEAVE = 202
     INVITE = 203
     KICK = 204
