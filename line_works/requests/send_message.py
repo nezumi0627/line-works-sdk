@@ -41,5 +41,5 @@ class SendMessageRequest(BaseSendMessageRequest):
             channel_no=channel_no,
             caller=caller,
             extras=flex_content.model_dump_json(by_alias=True),
-            type=MessageType.FLEX,
+            type=MessageType.BOT_FLEX,
         )
