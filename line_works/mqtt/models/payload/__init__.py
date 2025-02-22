@@ -39,6 +39,6 @@ NOTIFICATION_TYPE_MODEL_MAPPING: dict[int, Type[PayloadTypes]] = {
     NotificationType.NOTIFICATION_CAL_APPO_UPDATE.value: MessagePayload,
     NotificationType.NOTIFICATION_CAL_APPO_CANCEL.value: MessagePayload,
     NotificationType.NOTIFICATION_API_EXEC_COMMAND.value: MessagePayload,
-    # 現在V3が使われているようなので、18をNOTIFICATION_STICKERとして定義
+    # NOTE: 現在V3が使われているようなので、18をNOTIFICATION_STICKERとして定義
     NotificationType.NOTIFICATION_STICKER.value: MessagePayload,
 }
