@@ -46,19 +46,13 @@ class MQTTClient(BaseModel):
                 **config.HEADERS,
             },
             subprotocols=["mqtt"],
-            ping_interval=None,
+            ping_interval=config.KEEPALIVE_INTERVAL_SEC,
         )
 
-        await self._ws.send(packets.CONNECTION_PACKET)
+        await self._ws.send(packets.create_connection_packet())
 
         async with asyncio.TaskGroup() as tg:
-            tg.create_task(self.__send_pingreq())
             tg.create_task(self.__listen())
-
-    async def __send_pingreq(self) -> None:
-        while True:
-            await asyncio.sleep(config.KEEPALIVE_INTERVAL_SEC)
-            await self._ws.send(packets.PINGREQ_PACKET)
 
     async def __listen(self) -> None:
         while True:
