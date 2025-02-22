@@ -1,13 +1,15 @@
 import secrets
 import string
 
-from .config import KEEP_ALIVE, PROTOCOL_LEVEL, PROTOCOL_NAME
-
-# クライアントIDの設定
-CLIENT_ID_PREFIX = "web-beejs_"
-CLIENT_ID_SUFFIX_LENGTH = 8
-CONNECT_PACKET_TYPE = 0x10  # CONNECT パケットタイプ
-CONNECT_FLAGS = 0x02  # クリーンセッション
+from line_works.mqtt.config import (
+    CLIENT_ID_PREFIX,
+    CLIENT_ID_SUFFIX_LENGTH,
+    CONNECT_FLAGS,
+    CONNECT_PACKET_TYPE,
+    KEEP_ALIVE,
+    PROTOCOL_LEVEL,
+    PROTOCOL_NAME,
+)
 
 
 def generate_client_id_suffix() -> str:
