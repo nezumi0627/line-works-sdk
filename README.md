@@ -27,7 +27,10 @@ $ pip install line-works-sdk==x.x.devyyyymmddHHMM
 ## Usage
 
 ```python
-from line_works.client import LineWorks
+import json
+
+from line_works.client import FlexContent, LineWorks
+from line_works.mqtt.enums.notification_type import NotificationType
 from line_works.mqtt.enums.packet_type import PacketType
 from line_works.mqtt.models.packet import MQTTPacket
 from line_works.mqtt.models.payload.message import MessagePayload
