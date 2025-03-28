@@ -1,11 +1,12 @@
 import json
 
-from line_works.client import FlexContent, LineWorks
+from line_works.client import LineWorks
 from line_works.mqtt.enums.notification_type import NotificationType
 from line_works.mqtt.enums.packet_type import PacketType
 from line_works.mqtt.models.packet import MQTTPacket
 from line_works.mqtt.models.payload.message import MessagePayload
 from line_works.tracer import LineWorksTracer
+from line_works.openapi.talk.models.flex_content import FlexContent
 
 
 def receive_publish_packet(w: LineWorks, p: MQTTPacket) -> None:
