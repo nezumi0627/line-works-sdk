@@ -60,7 +60,7 @@ def receive_publish_packet(w: LineWorks, p: MQTTPacket) -> None:
             j: dict = json.load(f)
         w.send_flex_message(
             payload.channel_no,
-            flex_content=FlexContent(alt_text="test", contents=j),
+            flex_content=FlexContent(altText="test", contents=j),
         )
 
     if payload.notification_type == NotificationType.NOTIFICATION_STICKER:
