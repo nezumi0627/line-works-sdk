@@ -1,3 +1,4 @@
+import io
 import json
 from os import makedirs
 from os.path import exists
@@ -145,27 +146,42 @@ class LineWorks(BaseModel, TalkApi):
         )
 
     def send_image_message(
-        self, to: int, channel_type: ChannelType, image_file_path: str
+        self,
+        to: int,
+        channel_type: ChannelType,
+        image_file_path: str,
     ) -> UploadResouceResponse:
         path = Path(image_file_path)
+        with open(path, "rb") as f:
+            image_bytes = f.read()
+        return self.send_image_message_with_file(
+            to=to,
+            channel_type=channel_type,
+            image_bytes=image_bytes,
+            file_name=path.name,
+        )
+
+    def send_image_message_with_file(
+        self,
+        to: int,
+        channel_type: ChannelType,
+        image_bytes: bytes,
+        file_name: str,
+    ) -> UploadResouceResponse:
+        image = Image.open(io.BytesIO(image_bytes), mode="r")
 
         res = self.issue_resource_path(
             issue_resource_path_request=IssueResourcePathRequest(
                 channel_no=to,
                 channel_type=channel_type,
-                filename=path.name,
-                filesize=path.stat().st_size,
+                filename=file_name,
+                filesize=len(image_bytes),
                 msg_type=MessageType.IMAGE,
             )
         )
-
-        image = Image.open(image_file_path)
-        with open(image_file_path, "rb") as f:
-            data = f.read()
-
         extras = ResourceExtras(
-            filename=path.name,
-            filesize=path.stat().st_size,
+            filename=file_name,
+            filesize=len(image_bytes),
             resourcepath=res.var_resource_path,
             width=image.width,
             height=image.height,
@@ -201,7 +217,7 @@ class LineWorks(BaseModel, TalkApi):
                 "writeMode": "overwrite",
                 "isMakethumbnail": "true",
             },
-            files={"file": data},
+            files={"file": image_bytes},
         )
         return UploadResouceResponse.model_validate(response.json())
 
