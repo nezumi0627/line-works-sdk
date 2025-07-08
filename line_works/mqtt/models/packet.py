@@ -75,13 +75,44 @@ class MQTTPacket(BaseModel):
     @property
     def payload(self) -> PayloadTypes:
         p = self.publish_payload
-        if not (n_type := p.get("nType")):
-            raise PacketParseException(f"invalid payload: {p}")
 
-        if not (p_model := NOTIFICATION_TYPE_MODEL_MAPPING.get(n_type)):
-            raise PacketParseException(f"invalid notification type: {n_type}")
+        # 1. Standard notification flow (has nType)
+        if (n_type := p.get("nType")) is not None:
+            p_model = NOTIFICATION_TYPE_MODEL_MAPPING.get(n_type)
+            if p_model is None:
+                raise PacketParseException(
+                    f"invalid notification type: {n_type}"
+                )
+            return p_model.model_validate(p)  # type: ignore
 
-        return p_model.model_validate(self.publish_payload)  # type: ignore
+        # 2. System message flow (join / leave / kick ...)
+        if (
+            (relay := p.get("relayDataList"))
+            and isinstance(relay, list)
+            and len(relay) > 0
+            and (cmd := relay[0].get("cmd"))
+        ):
+            # local import to avoid circular
+            from line_works.mqtt.enums.control_packet_type import (
+                ControlPacketType,
+            )
+            from line_works.mqtt.models.payload.system import (
+                BotKickedPayload,
+                UserJoinLeavePayload,
+            )
+
+            if cmd in (
+                ControlPacketType.JOIN,
+                ControlPacketType.QUIT,
+            ):
+                return UserJoinLeavePayload.model_validate(p)
+            if cmd == ControlPacketType.BOT_KICKED:
+                return BotKickedPayload.model_validate(p)
+
+        unsupported_format_msg = (
+            "Unsupported payload format: missing 'nType' and 'relayDataList'."
+        )
+        raise PacketParseException(unsupported_format_msg)
 
     @classmethod
     def parse_from_bytes(cls, data: bytes) -> Self:
