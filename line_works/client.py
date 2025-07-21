@@ -249,6 +249,93 @@ class LineWorks(BaseModel, TalkApi):
             to, channel_type, MessageType.IMAGE, image_bytes, file_name, extras
         )
 
+    def send_audio_message(
+        self, to: int, channel_type: ChannelType, audio_file_path: str
+    ) -> UploadResouceResponse:
+        path = Path(audio_file_path)
+        with open(path, "rb") as f:
+            audio_bytes = f.read()
+
+        return self.send_audio_message_with_file(
+            to=to,
+            channel_type=channel_type,
+            audio_bytes=audio_bytes,
+            file_name=path.name,
+        )
+
+    def send_audio_message_with_file(
+        self,
+        to: int,
+        channel_type: ChannelType,
+        audio_bytes: bytes,
+        file_name: str,
+    ) -> UploadResouceResponse:
+        extras = ResourceExtras(
+            filename=file_name,
+            filesize=len(audio_bytes),
+        )
+        return self.__upload_resource(
+            to, channel_type, MessageType.AUDIO, audio_bytes, file_name, extras
+        )
+
+    def send_voice_message(
+        self, to: int, channel_type: ChannelType, voice_file_path: str
+    ) -> UploadResouceResponse:
+        path = Path(voice_file_path)
+        with open(path, "rb") as f:
+            voice_bytes = f.read()
+
+        return self.send_voice_message_with_file(
+            to=to,
+            channel_type=channel_type,
+            voice_bytes=voice_bytes,
+            file_name=path.name,
+        )
+
+    def send_voice_message_with_file(
+        self,
+        to: int,
+        channel_type: ChannelType,
+        voice_bytes: bytes,
+        file_name: str,
+    ) -> UploadResouceResponse:
+        extras = ResourceExtras(
+            filename=file_name,
+            filesize=len(voice_bytes),
+        )
+        return self.__upload_resource(
+            to, channel_type, MessageType.VOICE, voice_bytes, file_name, extras
+        )
+
+    def send_video_message(
+        self, to: int, channel_type: ChannelType, video_file_path: str
+    ) -> UploadResouceResponse:
+        path = Path(video_file_path)
+        with open(path, "rb") as f:
+            video_bytes = f.read()
+
+        return self.send_video_message_with_file(
+            to=to,
+            channel_type=channel_type,
+            video_bytes=video_bytes,
+            file_name=path.name,
+        )
+
+    def send_video_message_with_file(
+        self,
+        to: int,
+        channel_type: ChannelType,
+        video_bytes: bytes,
+        file_name: str,
+    ) -> UploadResouceResponse:
+        extras = ResourceExtras(
+            filename=file_name,
+            filesize=len(video_bytes),
+        )
+        return self.__upload_resource(
+            to, channel_type, MessageType.VIDEO, video_bytes, file_name, extras
+        )
+
     def send_file_message(
         self, to: int, channel_type: ChannelType, file_path: str
     ) -> UploadResouceResponse:
