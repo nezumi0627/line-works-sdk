@@ -5,7 +5,7 @@ from os.path import exists
 from os.path import join as path_join
 from pathlib import Path
 from time import time
-from typing import Any, cast
+from typing import Any
 from urllib.parse import urljoin
 
 from PIL import Image
