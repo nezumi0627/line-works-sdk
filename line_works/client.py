@@ -102,7 +102,9 @@ class LineWorks(BaseModel, TalkApi):
         )
 
         for k, v in self.session.headers.items():
-            storage_api_client.set_default_header(k, v)
+            header_value: str = str(v)
+            storage_api_client.set_default_header(k, header_value)
+
         self.storage_api = StorageApi(api_client=storage_api_client)
 
         my_info = self.get_my_info()
