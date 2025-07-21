@@ -5,7 +5,7 @@ from os.path import exists
 from os.path import join as path_join
 from pathlib import Path
 from time import time
-from typing import Any
+from typing import Any, cast
 from urllib.parse import urljoin
 
 from PIL import Image
@@ -101,9 +101,12 @@ class LineWorks(BaseModel, TalkApi):
             cookie=self.cookie_str,
         )
 
-        for k, v in self.session.headers.items():
-            header_value: str = str(v)
-            storage_api_client.set_default_header(k, header_value)
+        headers = {
+            str(k): (v.decode() if isinstance(v, bytes) else str(v))
+            for k, v in self.session.headers.items()
+        }
+        for k, v in headers.items():
+            storage_api_client.set_default_header(k, v)
 
         self.storage_api = StorageApi(api_client=storage_api_client)
 
