@@ -41,7 +41,7 @@ def receive_publish_packet(w: LineWorks, p: MQTTPacket) -> None:
         )
         w.send_text_message(
             payload.channel_no,
-            "{user} さん！",
+            "Hello, {user} !!",
             substitution=substitution,
         )
 
